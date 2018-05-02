@@ -5,10 +5,17 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from datetime import datetime
+import pymysql
+import redis
+import json
+from scrapy.utils.project import get_project_settings
 
 
 class MynewsPipeline(object):
     def process_item(self, item, spider):
         item["crawled"] = datetime.utcnow()
         item["spider"] = spider.name
+        item["body"] = item["body"].strip()
+        item["pubtime"] = item["pubtime"].replace('来源: ', '')
+        item["pubtime"] = item["pubtime"].strip()
         return item

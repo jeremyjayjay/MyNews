@@ -71,6 +71,7 @@ ROBOTSTXT_OBEY = False
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'scrapy_redis.pipelines.RedisPipeline': 400,
+    'MyNews.pipelines.MynewsPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -94,8 +95,21 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-REDIS_URL = 'redis://10.36.131.52:6379'
+REDIS_URL = 'redis://localhost:6379'
 
 LOG_LEVEL = 'DEBUG'
 
 DOWNLOAD_DELAY = 1
+
+DOWNLOAD_TIMEOUT = 10000
+
+CLOSESPIDER_TIMEOUT = 100000
+
+DATABASE = {
+    'host':'localhost',
+    'port':3306,
+    'user':'root',
+    'password':'root',
+    'db':'news',
+    'charset':'utf8',
+}

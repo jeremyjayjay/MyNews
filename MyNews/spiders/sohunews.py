@@ -4,7 +4,7 @@ import re
 from scrapy_redis.spiders import RedisSpider
 from MyNews.items import NewsItem
 from scrapy import Request
-# from ..headers import qqheaders
+
 
 class sohunewsSpider(RedisSpider):
     """Spider that reads urls from redis queue (qqnews:start_urls)."""
@@ -15,10 +15,7 @@ class sohunewsSpider(RedisSpider):
     re_str1 = re.compile("item:\[(.*)\]")
     re_str2 = re.compile("\[(.*?),\"(.*?)\",\"(.*?)\",\"(.*?)\"]")
 
-    # taglist = ['ent','sports','tech']
-
     def __init__(self, *args, **kwargs):
-        # Dynamically define the allowed domains list.
         domain = kwargs.pop('sohu.com', 'news.sohu.com')
         self.allowed_domains = filter(None, domain.split(','))
         super(sohunewsSpider, self).__init__(*args, **kwargs)
@@ -38,9 +35,7 @@ class sohunewsSpider(RedisSpider):
     def parsepage1(self,response):
         tag = response.meta['tag']
         html = response.text
-        # html = html.replace('var newsJason = ','')
         info = self.re_str1.findall(html)[0]
-        # info = info.split(',')
         infolist = self.re_str2.findall(info)
         for info in infolist:
             url = info[2]
